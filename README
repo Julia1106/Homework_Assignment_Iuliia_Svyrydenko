@@ -1,0 +1,36 @@
+/*E-Commerce Website Test Automation
+
+This repository contains automated tests for the e-commerce website [SauceDemo](https://www.saucedemo.com/) using Playwright and TypeScript.
+
+Test Scenarios
+
+1. User Login
+2. Add Product to Cart
+3. Checkout Process
+
+Project Structure
+
+- `login.page/`: Contains Page Object Model classes.
+- `product.page/`: Contains Page Object Model classes
+- `tests/`: Contains test scenarios.
+
+Installation
+1 Clone the repository:
+2 Install the dependencies:
+    npm install
+3 npx playwright install
+    npx playwright install
+
+Running the Tests
+To run the tests, use the Playwright test runner:
+    npx playwright test
+
+
+
+
+
+
+
+
+
+    */
