@@ -13,7 +13,7 @@ import { Locator, Page} from '@playwright/test';
 
         }
          async navigateToCart(){
-            await this.page.click('.shopping_cart_link');
+            await this.page.click('[data-test="shopping-cart-link"]');
          }
          async addProductToCartMainPage(productName){
              // Format the product name to match the ID format in the locator

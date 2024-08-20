@@ -8,9 +8,9 @@ import { Locator, Page} from '@playwright/test';
 
     constructor(page: Page){
         this.page = page;
-        this.userName = page.locator('#user-name');
-        this.password = page.locator('#password');
-        this.loginButton = page.locator('#login-button')
+        this.userName =  page.getByPlaceholder('Username');
+        this.password = page.getByPlaceholder('password');
+        this.loginButton =  page.locator('[data-test="login-button"]');
     }
     async navigate(){
         await this.page.goto('https://www.saucedemo.com/');

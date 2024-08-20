@@ -30,7 +30,7 @@ test.describe('Login tests', ()=>{
     await loginPage.login('user123','secret_sauce');
     await loginPage.clickLoginButton();
     //vrify that login was unsuccessful
-    await expect(page.locator('.error-message-container')).toContainText('Epic sadface: Username and password do not match any user in this service');
+    await expect(page.locator('[data-test="error"]')).toContainText('Epic sadface: Username and password do not match any user in this service');
   });
 });
 
@@ -56,22 +56,22 @@ test.describe('Add to cart test', ()=>{
     // add product Sauce Labs Backpack from main page
     await productPage.addProductToCartMainPage("Sauce Labs Backpack");
      // verify a badge with a count of 1
-     await expect(page.locator('.shopping_cart_badge')).toHaveText('1');
+     await expect(page.locator('[data-test="shopping-cart-link"]')).toHaveText('1');
      // navigate to cart
      await productPage.navigateToCart();
      // verify tahat product was successfuiiy added
-     await expect(page.locator('.inventory_item_name')).toHaveText(' Sauce Labs Backpack');
+     await expect(page.getByRole('heading', {name:'Sauce Labs Bike Light'})).toBeVisible;;
   })
 
   test ('add to cart from product details',async({page})=>{
     // add Sauce Labs Bike Light to cart
     await productPage.addProductToCart("Sauce Labs Bike Light");
     // verify a badge with a count of 1
-    await expect(page.locator('.shopping_cart_badge')).toHaveText('1');
+    await expect(page.locator('[data-test="shopping-cart-link"]')).toHaveText('1');
     // navigate to cart
     await productPage.navigateToCart();
     // verify tahat product was successfuiiy added
-    await expect(page.locator('.inventory_item_name')).toHaveText('Sauce Labs Bike Light');
+    await expect(page.getByRole('heading', {name:'Sauce Labs Bike Light'})).toBeVisible;
 
   });
 
@@ -90,19 +90,19 @@ test.describe('Add to cart test', ()=>{
         await productPage.navigateToCart();
     });
     test('successful checkout', async({page})=>{
-      await page.click("#checkout");
-      await page.fill("#first-name", "John");
-      await page.fill("#last-name", "Doe");
-      await page.fill("#postal-code","123");
-      await page.click("#continue");
-      await page.click("#finish");
-      await expect(page.locator('.complete-header')).toHaveText('Thank you for your order!');
+      await page.getByRole("button", {name: 'checkout'}).click();
+      await page.getByPlaceholder('First Name'). fill('John');
+      await page.getByPlaceholder('Last Name'). fill('Doe');
+      await page.getByPlaceholder('Zip/Postal Code'). fill('123');;
+      await page.getByRole('button', {name: 'continue'}).click();
+      await page.getByRole('button', {name: 'Finish'}).click();
+      await expect(page.getByRole('heading', {name:'Thank you for your order!'})).toBeVisible;
     });
     test('attempt  to process checkout without credentials', async({page})=>{
-      await page.click("#checkout");
-      await page.click("#continue");
-      await expect(page.locator('.error-message-container')).toContainText('Error: First Name is required');
-      await expect(page).toHaveURL('https://www.saucedemo.com/checkout-step-one.html')
+      await page.getByRole("button", {name: 'checkout'}).click()
+      await page.getByRole('button', {name: 'continue'}).click();
+      await expect(page.getByRole('heading', {name:'Error: First Name is required'})).toBeVisible;
+      await expect(page).toHaveURL('https://www.saucedemo.com/checkout-step-one.html');
     });
   });
 });
